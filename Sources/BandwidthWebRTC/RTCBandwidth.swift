@@ -282,14 +282,14 @@ public class RTCBandwidth: NSObject {
                 for audioTrack in mediaStream.audioTracks {
                     if transceiver.sender.track == audioTrack {
                         publishingPeerConnection?.removeTrack(transceiver.sender)
-                        transceiver.stopInternal()
+                        transceiver.stop()
                     }
                 }
                 
                 for videoTrack in mediaStream.videoTracks {
                     if transceiver.sender.track == videoTrack {
                         publishingPeerConnection?.removeTrack(transceiver.sender)
-                        transceiver.stopInternal()
+                        transceiver.stop()
                     }
                 }
             }
