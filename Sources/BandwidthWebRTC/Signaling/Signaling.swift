@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import JSONRPCWebSockets
 
 enum SignalingMethod: String {
     case answerSDP = "answerSdp"
@@ -36,12 +35,12 @@ class Signaling {
             URLQueryItem(name: "sdkVersion", value: sdkVersion),
             URLQueryItem(name: "uniqueId", value: UUID().uuidString)
         ]
-        
+
         guard let url = urlComponents.url else {
             completion(.failure(SignalingError.invalidWebSocketURL))
             return
         }
-        
+
         connect(to: url) { result in
             completion(result)
         }
@@ -56,12 +55,12 @@ class Signaling {
         } catch {
             completion(.failure(error))
         }
-        
+
         client.connect(url: url) {
             if !self.hasSetMediaPreferences {
                 self.setMediaPreferences(protocol: "WEBRTC") { result in
                     self.hasSetMediaPreferences = true
-                    
+
                     switch result {
                     case .success:
                         completion(.success(()))
@@ -110,4 +109,9 @@ class Signaling {
             completion(result)
         }
     }
+}
+
+enum BandwidthError: Error {
+    case invalidUrl
+    case failedToConnectToSignalingServer
 }
