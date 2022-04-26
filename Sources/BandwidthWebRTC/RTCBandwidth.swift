@@ -138,6 +138,27 @@ public class RTCBandwidth: NSObject {
         }
     }
     
+    public func insertDTMF(_ tone: String) {
+        guard let peerConnection = publishingPeerConnection else { return }
+        
+        var audioSender: RTCRtpSender?
+        
+        for rtpSender in peerConnection.senders {
+            if rtpSender.track?.kind == "audio" {
+                audioSender = rtpSender
+            }
+        }
+        
+        if let sender = audioSender {
+            let queue = OperationQueue()
+            queue.addOperation {
+                sender.dtmfSender?.insertDtmf(tone,
+                                              duration: 0.2,
+                                              interToneGap: 0.5)
+            }
+        }
+    }
+    
     private func addHeartbeatDataChannel(peerConnection: RTCPeerConnection) -> RTCDataChannel? {
         let configuration = RTCDataChannelConfiguration()
         configuration.channelId = 0
