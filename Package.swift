@@ -17,7 +17,7 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
          .package(name: "webrtc",
                   url: "https://github.com/alexpiezo/WebRTC.git",
-                  .upToNextMajor(from: "1.1.3"))
+                  .upToNextMajor(from: "95.4638.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
